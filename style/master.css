@@ -1,0 +1,255 @@
+/* reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Tahoma, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #1f2933, #0b0f14);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  gap: 30px;
+}
+
+
+/* وضعیت بازی */
+#status {
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+  color: #facc15;
+  text-shadow: 0 0 15px rgba(250, 204, 21, 0.6);
+  transition: 0.3s;
+}
+
+/* زمین بازی */
+.game {
+  position: relative;
+  width: 480px;
+  height: 80dvh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+/* لیوان‌ها */
+.cup {
+  margin-bottom: 200px;
+  position: absolute;
+  bottom: 0;
+  width: 120px;
+  height: 150px;
+  background: linear-gradient(180deg, #6b7280, #1f2937);
+  border-radius: 0 0 20px 20px;
+  cursor: pointer;
+  transition: transform 0.4s ease, box-shadow 0.3s;
+  box-shadow: 0 15px 30px rgba(0,0,0,.6);
+}
+
+.cup::before {
+  content: '';
+  position: absolute;
+  top: -15px;
+  left: 0;
+  width: 100%;
+  height: 25px;
+  background: linear-gradient(180deg, #9ca3af, #4b5563);
+  border-radius: 20px 20px 0 0;
+}
+
+/* هاور */
+.cup:hover {
+  box-shadow: 0 20px 45px rgba(0,0,0,.9);
+}
+
+/* بلند شدن لیوان */
+.cup.lift {
+  transform: translateY(-60px) scale(1.05);
+}
+
+/* توپ */
+.ball {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 35px;
+  height: 35px;
+  background: radial-gradient(circle at 30% 30%, #fde68a, #f59e0b);
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.9);
+  animation: pop 0.4s ease;
+}
+
+@keyframes pop {
+  from {
+    transform: translateX(-50%) scale(0);
+  }
+  to {
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+/* دکمه */
+#start {
+  margin-bottom: 200px;
+  padding: 12px 40px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  color: #111827;
+  background: linear-gradient(135deg, #22c55e, #4ade80);
+  box-shadow: 0 10px 25px rgba(34,197,94,.5);
+  transition: 0.3s;
+}
+
+#start:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(34,197,94,.8);
+}
+
+#start:active {
+  transform: scale(0.95);
+}
+
+
+
+.footer {
+  width: 100%;
+  height: 100vh;
+  background-color: #151522;
+
+  >div {
+    width: 100%;
+
+    &:nth-of-type(1) {
+      height: 40vh;
+      /* background-color: red; */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      >figure {
+        width: 320px;
+        height: 300px;
+        background-color: whitesmoke;
+        border-radius: 50px;
+        border: 5px solid #ff4d00;
+        overflow: hidden;
+        >img{
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+    }
+
+
+    &:nth-of-type(2) {
+      height: 20vh;
+      /* background-color: blue; */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 50px;
+
+      >div {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background-color: #151522;
+        border: 5px solid #ff4d00;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: .4s;
+
+        &:hover {
+          background-color: white;
+
+          >a {
+            >i {
+              color: #ff4d00;
+            }
+          }
+        }
+
+        >a {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: .4s;
+          text-decoration: none;
+
+          >i {
+            transition: .4s;
+            font-size: 50px;
+            color: white;
+
+          }
+        }
+
+      }
+    }
+
+    &:nth-of-type(3) {
+      height: 40vh;
+      /* border-top: 3px solid #ff4d00; */
+      background-color: #171726;
+      &:hover{
+        >div{
+        &:nth-of-type(1){
+           >h1{
+          margin-right: 50%;
+         }
+        }
+         &:nth-of-type(2){
+          >h1{
+            margin-left: 50%;
+          }
+         }
+         &:nth-of-type(3){
+          >h1{
+            margin-right: 50%;
+          }
+         }
+        }
+      }
+      >div{
+        /* border: 2px solid red; */
+        width: 100%;
+        height: 33.33%;
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        >h1{
+          transition: 1s;
+          width: 30%;
+          height: 90%;
+          background-color: #151522;
+          color: white;
+          border-radius: 20px;
+          border: 3px solid #ff4d00;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          font-family: pixel;
+          font-size: 40px;
+        }
+        &:nth-of-type(2){
+          justify-content: start;
+        }
+      }
+    }
+  }
+}

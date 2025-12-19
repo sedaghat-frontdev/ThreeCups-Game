@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Three Cups Game</title>
+  <link rel="stylesheet" href="style/master.css">
+  <link rel="stylesheet" href="style/FontIcons/remixicon.css">
+</head>
+
+<body>
+
+  <h2 id="status">توپ رو دنبال کن...</h2>
+
+  <div class="game">
+    <div class="cup" data-index="0"></div>
+    <div class="cup" data-index="1"></div>
+    <div class="cup" data-index="2"></div>
+  </div>
+
+  <button id="start">Start Game</button>
+
+
+  <div class="footer">
+    <div><figure><img src="style/livanbazi.jpg" alt=""></figure></div>
+    <div>
+      <div><a href="https://github.com/sedaghat-frontdev"><i class="ri-github-line"></i></a></div>
+      <div><a href="https://www.instagram.com/sedaghat-frontdev/"><i class="ri-instagram-line"></i></a></div>
+      <div><a href="mailto:rezzasedaghat@gmail.com"><i class="ri-mail-line"></i></a></div>
+    </div>
+    <div>
+      <div><h1>MohammadReza Sedaghat</h1></div>
+      <div><h1>Sedaghat-FrontDev</h1></div>
+      <div><h1>Hope you`ve enjoyed !</h1></div>
+    </div>
+  </div>
+
+  <script>
+    const cups = document.querySelectorAll('.cup');
+    const statusText = document.getElementById('status');
+    const startBtn = document.getElementById('start');
+
+    let positions = [0, 160, 320];
+    let ballCup = 0;
+
+    let isShuffling = false;
+    let gameRunning = false;
+    let canChoose = false;
+
+    let shuffleInterval;
+
+    /* مقداردهی اولیه */
+    cups.forEach((cup, i) => {
+      cup.style.transform = `translateX(${positions[i]}px)`;
+    });
+
+    /* شروع بازی */
+    startBtn.addEventListener('click', () => {
+      if (gameRunning) return; // ⛔ جلوگیری از شروع دوباره
+      startGame();
+    });
+
+    function startGame() {
+      gameRunning = true;
+      canChoose = false;
+
+      resetGame();
+
+      ballCup = Math.floor(Math.random() * 3);
+      statusText.textContent = 'توپ رو ببین 👀';
+
+      showBall(ballCup);
+
+      setTimeout(() => {
+        hideBalls();
+        startShuffle();
+      }, 3000);
+    }
+
+    /* شروع shuffle */
+    function startShuffle() {
+      isShuffling = true;
+      statusText.textContent = 'لیوان‌ها دارن قاطی میشن 🔄';
+
+      shuffleInterval = setInterval(shuffleCups, 350);
+
+      setTimeout(() => {
+        clearInterval(shuffleInterval);
+        isShuffling = false;
+        canChoose = true; // ✅ حالا کاربر می‌تونه انتخاب کنه
+        statusText.textContent = 'انتخاب کن 👆';
+      }, 10000);
+    }
+
+    /* جابجایی واقعی */
+    function shuffleCups() {
+      const order = [...positions].sort(() => Math.random() - 0.5);
+
+      cups.forEach((cup, i) => {
+        cup.style.transform = `translateX(${order[i]}px)`;
+      });
+
+      positions = order;
+    }
+
+    /* کلیک روی لیوان */
+    cups.forEach((cup, i) => {
+      cup.addEventListener('click', () => {
+        if (!canChoose) return; // ⛔ وسط بازی یا بعد از انتخاب
+        canChoose = false;     // ⛔ فقط یک بار اجازه انتخاب
+
+        cup.classList.add('lift');
+
+        if (i === ballCup) {
+          statusText.textContent = '🎉 بردی!';
+        } else {
+          statusText.textContent = '❌ باختی!';
+        }
+
+        revealBall();
+        gameRunning = false; // ✅ بازی تموم شد
+      });
+    });
+
+    /* توپ */
+    function showBall(index) {
+      const ball = document.createElement('div');
+      ball.className = 'ball';
+      cups[index].appendChild(ball);
+    }
+
+    function hideBalls() {
+      cups.forEach(cup => (cup.innerHTML = ''));
+    }
+
+    function revealBall() {
+      hideBalls();
+      showBall(ballCup);
+    }
+
+    /* ریست */
+    function resetGame() {
+      clearInterval(shuffleInterval);
+
+      positions = [0, 160, 320];
+
+      cups.forEach((cup, i) => {
+        cup.classList.remove('lift');
+        cup.innerHTML = '';
+        cup.style.transform = `translateX(${positions[i]}px)`;
+      });
+
+      isShuffling = false;
+    }
+
+  </script>
+</body>
+
+</html>
